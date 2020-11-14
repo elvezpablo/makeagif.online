@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+import MovieDrop from './MovieDrop';
 import './App.css';
 
 // https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/
-// https://vercel.com/docs/configuration#routes/headers
+// https://vercel.com/docs/configuration#project/headers
 // https://stackoverflow.com/questions/15464896/get-cpu-gpu-memory-information
 // https://stackoverflow.com/questions/45661913/vanilla-javascript-preview-video-file-before-upload-no-jquery
 // https://github.com/ffmpegwasm/ffmpeg.wasm/blob/master/docs/api.md
@@ -15,16 +16,20 @@ function App() {
   const ffmpeg = createFFmpeg({
     log: true,
   });
-  const setInputVideo = ({ target: { files } }) => {
-    console.log(files);
-    // TODO: warn users of 2 GB file limit
+  // const setInputVideo = ({ target: { files } }) => {
+  //   console.log(files);
+  //   // TODO: warn users of 2 GB file limit
 
-    if (files && files.length) {
-      setVideoSrc(files[0])
-    }
+  //   if (files && files.length) {
+  //     setVideoSrc(files[0])
+  //   }
 
+  // }
+
+  const handleFileDrop = (video) => {
+    console.log("dropped: ", video);
+    setVideoSrc(video)
   }
-
 
   const filter = "[0:v] fps=12,scale=w=480:h=-1,split [a][b];[a] palettegen [p];[b][p] paletteuse";
 
@@ -46,9 +51,10 @@ function App() {
   };
   return (
     <div className="App">
-      {/* <video src={ } /> */}
+      {!videoSrc && <MovieDrop onFileDrop={handleFileDrop} />}
+      {videoSrc && <video src={URL.createObjectURL(videoSrc)} controls />}
       <img src={outputSrc} />
-      <input type="file" onChange={setInputVideo} />
+      {/* <input type="file" onChange={setInputVideo} /> */}
       <button onClick={doTranscode}>Start</button>
     </div>
   );
