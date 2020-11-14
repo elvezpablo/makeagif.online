@@ -3,6 +3,7 @@ import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import './App.css';
 
 // https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/
+// https://vercel.com/docs/configuration#routes/headers
 // https://stackoverflow.com/questions/15464896/get-cpu-gpu-memory-information
 // https://stackoverflow.com/questions/45661913/vanilla-javascript-preview-video-file-before-upload-no-jquery
 // https://github.com/ffmpegwasm/ffmpeg.wasm/blob/master/docs/api.md
