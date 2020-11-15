@@ -1,5 +1,35 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
+import styled from 'styled-components';
+
+const getColor = (props) => {
+    if (props.isDragAccept) {
+        return '#00e676';
+    }
+    if (props.isDragReject) {
+        return '#ff1744';
+    }
+    if (props.isDragActive) {
+        return '#2196f3';
+    }
+    return '#eeeeee';
+}
+
+const Container = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: ${props => getColor(props)};
+  border-style: dashed;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  outline: none;
+  transition: border .24s ease-in-out;
+`;
 
 // Max size in chrome with this library 
 // https://github.com/ffmpegwasm/ffmpeg.wasm/issues/92
@@ -7,35 +37,38 @@ const MAX_FILE_SIZE = Math.pow(10, 6) * 261;
 
 const MovieDrop = ({ onFileDrop }) => {
     const onDrop = useCallback(acceptedFiles => {
-        // Do something with the files
-        // console.log(acceptedFiles);
         if (acceptedFiles.length) {
             onFileDrop(acceptedFiles.pop());
         }
     }, [])
 
     const {
-        acceptedFiles,
         fileRejections,
         isDragActive,
         getRootProps,
         getInputProps
     } = useDropzone({
-        accept: 'video/mp4, video/mov',
+        accept: 'video/mp4',
         multiple: false,
         maxSize: MAX_FILE_SIZE,
         onDrop,
     });
+    if (fileRejections.length) {
+        // TODO make a cool rejection UI
+        // TODO: warn users of 2 GB file limit
+        console.log(fileRejections)
+    }
 
     return (
-        <div {...getRootProps()}>
+        <Container {...getRootProps()}>
             <input {...getInputProps()} />
             {
                 isDragActive ?
                     <p>Drop the files here ...</p> :
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <p>Drag 'n' drop some files here, or click to select a video file.</p>
             }
-        </div>
+
+        </Container>
     )
 }
 

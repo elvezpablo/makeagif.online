@@ -12,7 +12,8 @@
     "@ffmpeg/ffmpeg": "^0.9.4",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-dropzone": "^11.2.4"
+    "react-dropzone": "^11.2.4",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.0.4",
