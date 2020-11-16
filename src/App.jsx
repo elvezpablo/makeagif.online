@@ -3,6 +3,7 @@ import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import styled from "styled-components";
 import MovieDrop from './MovieDrop';
 import VideoPreview from "./VideoPreview";
+import Output from "./Output";
 
 const Progress = styled.progress`
    width: 100%;
@@ -23,6 +24,7 @@ const TRANSCODE = {
   COMPLETE: 3
 }
 
+
 const App = () => {
   const [videoSrc, setVideoSrc] = useState();
   const [outputSrc, setOutputSrc] = useState();
@@ -32,13 +34,12 @@ const App = () => {
   const ffmpeg = createFFmpeg({
     log: false,
   });
+
   const handleFileDrop = (video) => {
-    console.log("dropped: ", video);
     setVideoSrc(video)
   }
 
   ffmpeg.setProgress(({ ratio }) => {
-    console.log(ratio);
     setTranscodeProgress(ratio);
   });
 
@@ -51,11 +52,17 @@ const App = () => {
     const inputName = videoSrc?.name || "";
     ffmpeg.FS('writeFile', inputName, await fetchFile(videoSrc));
     setTranscodeState(TRANSCODE.TRANSCODING);
-    await ffmpeg.run('-i', inputName, '-filter_complex', filter, 'output.gif');
+    await ffmpeg.run('-i', inputName, '-filter_complex', filter, '-loop', '-1', 'output.gif');
     const data = ffmpeg.FS('readFile', 'output.gif');
     setOutputSrc(URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' })));
     setTranscodeState(TRANSCODE.COMPLETE);
   };
+
+  const handleReset = (e) => {
+    setOutputSrc(undefined);
+    setTranscodeState(TRANSCODE.PRELOAD);
+    setTranscodeProgress(0);
+  }
 
   return (
     <div>
@@ -63,9 +70,11 @@ const App = () => {
         {videoSrc ?
           <VideoPreview videoSrc={videoSrc} /> :
           <MovieDrop onFileDrop={handleFileDrop} />}
-        <img src={outputSrc} />
+        {transcodeState >= 0 && <Output outputSrc={outputSrc} videoSrc={videoSrc} />}
         {transcodeState === -1 && <button disabled={!videoSrc} onClick={doTranscode}>Start</button>}
         {transcodeState >= 0 && transcodeState < 3 && <Progress value={transcodeProgress} />}
+        {transcodeState === 3 && <button onClick={handleReset}  >Reset</button>}
+
       </Column>
     </div>
   );

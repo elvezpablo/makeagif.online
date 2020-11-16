@@ -1,6 +1,8 @@
 # makeagif.online - MaGO 
 
 
+[https://makeagif-online.vercel.app/](https://makeagif-online.vercel.app/)
+
 Fully client side gif encoding using the awesome [WASM FFMPEG](https://github.com/ffmpegwasm/ffmpeg.wasm) encoder. 
 
 Current Issues: 
