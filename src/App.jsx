@@ -52,7 +52,8 @@ const App = () => {
     const inputName = videoSrc?.name || "";
     ffmpeg.FS('writeFile', inputName, await fetchFile(videoSrc));
     setTranscodeState(TRANSCODE.TRANSCODING);
-    await ffmpeg.run('-i', inputName, '-filter_complex', filter, '-loop', '-1', 'output.gif');
+    // await ffmpeg.run('-i', inputName, '-filter_complex', filter, '-loop', '-1', 'output.gif');
+    await ffmpeg.run('-i', inputName, '-filter_complex', filter, 'output.gif');
     const data = ffmpeg.FS('readFile', 'output.gif');
     setOutputSrc(URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' })));
     setTranscodeState(TRANSCODE.COMPLETE);
