@@ -4,15 +4,15 @@
             "source": "/(.*)",
             "headers": [
                 {
-                    "key": "X-Content-Type-Options",
+                    "key": "x-content-type-options",
                     "value": "nosniff"
                 },
                 {
-                    "key": "Cross-Origin-Embedder-Policy",
+                    "key": "cross-origin-embedder-policy",
                     "value": "require-corp"
                 },
                 {
-                    "key": "Cross-Origin-Opener-Policy",
+                    "key": "cross-origin-opener-policy",
                     "value": "same-origin"
                 }
             ]
