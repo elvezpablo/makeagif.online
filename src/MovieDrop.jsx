@@ -31,12 +31,10 @@ const Container = styled.div`
   transition: border .24s ease-in-out;
 `;
 
-// Max size in chrome with this library 
-// https://github.com/ffmpegwasm/ffmpeg.wasm/issues/92
-const MAX_FILE_SIZE = Math.pow(10, 6) * 261;
 
-const MovieDrop = ({ onFileDrop }) => {
+const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
     const onDrop = useCallback(acceptedFiles => {
+
         if (acceptedFiles.length) {
             onFileDrop(acceptedFiles.pop());
         }
@@ -48,9 +46,9 @@ const MovieDrop = ({ onFileDrop }) => {
         getRootProps,
         getInputProps
     } = useDropzone({
-        accept: 'video/mp4',
+        accept: fileTypes,
         multiple: false,
-        maxSize: MAX_FILE_SIZE,
+        maxSize,
         onDrop,
     });
     if (fileRejections.length) {

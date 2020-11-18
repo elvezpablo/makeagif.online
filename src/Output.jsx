@@ -26,12 +26,12 @@ const Container = styled.div`
     }
 `;
 
-const Output = ({ outputSrc, videoSrc }) => {
+const Output = ({ outputSrc, videoName }) => {
 
     return (
         <Container>
             {!outputSrc && <Spinner />}
-            <a href={outputSrc} download={videoSrc.name.replace(/[^.]+$/, "gif")} >
+            <a href={outputSrc} download={videoName.replace(/[^.]+$/, "gif")} >
                 <img src={outputSrc} />
             </a>
         </Container>);
