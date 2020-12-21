@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import MovieDrop from './MovieDrop';
-import VideoPreview from './VideoPreview';
-import Output from './Output';
-import Settings from './Settings';
-import {TRANSCODE, DEFAULTS, doTranscode} from "./makeagif/transcode";
+import MovieDrop from './components/MovieDrop';
+import VideoPreview from './components/VideoPreview';
+import Output from './components/Output';
+import Settings from './components/Settings';
+import Header from "./components/Header";
+import {TRANSCODE, doTranscode} from "./makeagif/transcode";
+
+// Max size in chrome with this library
+// https://github.com/ffmpegwasm/ffmpeg.wasm/issues/92
+const MAX_FILE_SIZE = Math.pow(10, 6) * 261;
+
+const DEFAULTS = {
+  maxSize: MAX_FILE_SIZE,
+  fileTypes: 'video/mp4',
+};
+
+
 
 const Progress = styled.progress`
   width: 100%;
@@ -63,6 +75,7 @@ const App = () => {
   return (
     <div>
       <Column>
+        <Header/>
         {videoMetadata ? (
           <>
             <VideoPreview videoSrc={videoMetadata.src} onLoad={handleOnLoad} />

@@ -1,8 +1,7 @@
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 
-// Max size in chrome with this library
-// https://github.com/ffmpegwasm/ffmpeg.wasm/issues/92
-const MAX_FILE_SIZE = Math.pow(10, 6) * 261;
+// TODO: add more options
+// https://medium.com/@colten_jackson/doing-the-gif-thing-on-debian-82b9760a8483
 
 const DEFAULTS = {
   fps: 12,
@@ -10,8 +9,6 @@ const DEFAULTS = {
   width: 480,
   log: false,
   loop: true,
-  maxSize: MAX_FILE_SIZE,
-  fileTypes: 'video/mp4',
   tmpOutput: 'output.gif',
 };
 
@@ -23,6 +20,21 @@ const TRANSCODE = {
   COMPLETE: 5,
   ERROR: 10
 };
+
+// https://stackoverflow.com/questions/46060013/how-to-add-watermark-in-a-gif-with-ffmpeg
+/*
+ffmpeg -i in.mp4 -i watermark.png -filter_complex "[0]fps=10,scale=320:-1:flags=lanczos[bg];[bg][1]overlay=W-w-5:H-h-5,palettegen" palette.png
+ffmpeg -i in.mp4 -i watermark.png -i palette.png -filter_complex "[0]fps=10,scale=320:-1:flags=lanczos[bg];[bg][1]overlay=W-w-5:H-h-5[x];[x][2]paletteuse=dither=bayer:bayer_scale=3" output.gif
+*/
+
+/*
+cropping
+*/
+
+/*
+Fluent FFMPEG
+https://github.com/fluent-ffmpeg/node-fluent-ffmpeg
+*/
 
 const generateFilter = (fps = DEFAULTS.fps, width = DEFAULTS.width) => {
   return `[0:v] fps=${fps},scale=w=${width}:h=-1,split [a][b];[a] palettegen [p];[b][p] paletteuse`;
@@ -38,24 +50,18 @@ const doTranscode = async (
   src,
   setProgress,
 ) => {
-  ffmpeg.setProgress(({ ratio }) => {
-    // setTranscodeProgress(ratio);
-    setProgress({state: TRANSCODE.PROGRESS, data: ratio});
-  });
+  ffmpeg.setProgress(({ ratio }) => setProgress({state: TRANSCODE.PROGRESS, data: ratio}));
 
   const filter = generateFilter();
 
-  // setTranscodeState(TRANSCODE.LOADING);
   setProgress({ state: TRANSCODE.LOADING });
   if(!ffmpeg.isLoaded()) {
     await ffmpeg.load();
   }
   
-  // setTranscodeState(TRANSCODE.STARTED);
   setProgress({ state: TRANSCODE.STARTED });
-
   ffmpeg.FS('writeFile', name, await fetchFile(src));
-  // setTranscodeState(TRANSCODE.TRANSCODING);
+  
   setProgress({ state: TRANSCODE.TRANSCODING });
   // await ffmpeg.run('-i', inputName, '-filter_complex', filter, '-loop', '-1', 'output.gif');
   await ffmpeg.run('-i', name, '-filter_complex', filter, DEFAULTS.tmpOutput);
@@ -68,4 +74,4 @@ const doTranscode = async (
   setProgress({ state: TRANSCODE.COMPLETE, data: output });
 };
 
-export { TRANSCODE, DEFAULTS, doTranscode };
+export { TRANSCODE, doTranscode };

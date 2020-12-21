@@ -4045,6 +4045,11 @@ react-refresh@^0.9.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.9.0.tgz#71863337adc3e5c2f8a6bfddd12ae3bfe32aafbf"
   integrity sha512-Gvzk7OZpiqKSkxsQvO/mbTN1poglhmAV7gR/DdIrRrSMXraRQQlfikRJOr3Nb9GTMPC5kof948Zy6jJZIFtDvQ==
 
+react-slider@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-slider/-/react-slider-1.1.2.tgz#d059f801615ef2cb3f6e226c232b2a4cbee0e615"
+  integrity sha512-rPz4K7IhMg4Jj1vvEywv8/ePhAQ9mfh4BKQl8DxB7AN6v1UD7fp0og6BnoH8MfBH1AwtvxKRELbSGl443EuczQ==
+
 react@^17.0.0:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"

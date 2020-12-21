@@ -5,6 +5,8 @@ const Container = styled.div`
     background-color: #222;
     text-align: center;
 `
+
+
 const VideoPreview = ({ videoSrc, onLoad }) => {
 
     const handleLoad = (e) => {
