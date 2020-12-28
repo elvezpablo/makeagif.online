@@ -12,6 +12,8 @@ Fully client side gif encoding using the awesome [WASM FFMPEG](https://github.co
     - [ ] https://teenyicons.com/
     - [ ] https://heroicons.com/
   - [ ] Options (loop, resize, fps)
+  - [ ] Informative Errors
+    - [ ] https://swizec.com/blog/tooltips-tooltips-are-not-so-easy
   - [ ] Analytics
 - 1.1 
   - [ ] Options

@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
 import ReactSlider from 'react-slider';
+import Linked from "../components/icons/Linked.jsx";
+import UnLinked from "../components/icons/Unlinked.jsx";
+import {formatBytes} from "../formatters";
 
 const StyledSlider = styled(ReactSlider)`
   width: 100%;
@@ -34,7 +37,9 @@ const Track = (props, state) => <StyledTrack {...props} index={state.index} />;
 
 
 
-const Input = styled.input``
+const Input = styled.input`
+  font-family: Raleway;
+`;
 
 const Dimensions = ({ data, onChange }) => {
 
@@ -49,22 +54,23 @@ const Dimensions = ({ data, onChange }) => {
     }
 
     return (
-        <>
-            <Input value={data.width} onChange={inputChange('width')} />
-            <button >{data.ratioLocked ? "locked" : "unlocked"}</button>
-            <Input value={data.height} onChange={inputChange('height')} />
-        </>
+      <>
+        <Input value={data.width} onChange={inputChange('width')} />
+        {data.ratioLocked ? <Linked /> : <UnLinked />}
+        <Input value={data.height} onChange={inputChange('height')} />
+        <div>{formatBytes(data.size)}</div>
+      </>
     );
 }
 
 const Settings = ({ settings, onChange }) => {
-    // console.log(settings);
+    console.log(settings);
     const [value, setValue] = React.useState([25, 50]);
-    const { ratioLocked, width, height } = settings;
+    const { ratioLocked, width, height, size } = settings;
     return (
       <div>
         <Dimensions
-          data={{ width, height, ratioLocked }}
+          data={{ width, height, ratioLocked, size }}
           onChange={(d) => console.log(d)}
         />
         <StyledSlider

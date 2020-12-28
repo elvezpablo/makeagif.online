@@ -54,7 +54,8 @@ const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
     if (fileRejections.length) {
         // TODO make a cool rejection UI
         // TODO: warn users of 2 GB file limit
-        console.log(fileRejections)
+        
+        // console.log(fileRejections.filter(({errors})) => errors)
     }
 
     return (
@@ -70,4 +71,4 @@ const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
     )
 }
 
-export default MovieDrop;
+export default MovieDrop

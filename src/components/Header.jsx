@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import Play from './icons/Play';
 
-const Title = styled.h1``;
+const Title = styled.h1`
+  color: ${({theme}) => theme.colors.heading};
+`;
 
 const Header = () => {
     return     (<div>
-      <Title>{`MakeAGif.online (MaGo)`}</Title>
-      <Play/>
+      <Title>{`MakeAGif.online`}</Title>
+      
     </div>);
 }
 
