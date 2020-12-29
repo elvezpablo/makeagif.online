@@ -11,7 +11,9 @@ import theme from './theme';
 // Max size in chrome with this library
 // https://github.com/ffmpegwasm/ffmpeg.wasm/issues/92
 // bumped it to 2 GB
-const MAX_FILE_SIZE = Math.pow(1024, 9) * 2;
+// dropping it back down to 6 MB 
+const _6MB = Math.pow(10, 6) * 20
+const MAX_FILE_SIZE = _6MB;
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -20,9 +22,6 @@ const GlobalStyle = createGlobalStyle`
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
     background: ${props => props.theme.colors.background};
-    /* background-color: #00004f;
-    background-image: linear-gradient(rgba(25, 70, 91, 0.5) 1px, transparent 1px), linear-gradient(#19465b 1px, transparent 1px), linear-gradient(90deg, rgba(25, 70, 91, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(25, 70, 91, 0.7) 1px, transparent 1px), linear-gradient(transparent 3px, #00004f 3px, #00004f 58px, transparent 58px), linear-gradient(90deg, rgba(25, 70, 91, 0.7) 3px, transparent 3px, transparent 58px, rgba(25, 70, 91, 0.7) 58px);
-    background-size: 15px 15px, 60px 60px, 15px 15px, 60px 60px, 60px 60px, 60px 60px; */
   }
 `;
 
@@ -35,7 +34,7 @@ const Progress = styled.progress`
   width: 100%;
 `;
 const Column = styled.div`
-  width: 480px;
+  width: 600px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

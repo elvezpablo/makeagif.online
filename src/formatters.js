@@ -1,3 +1,5 @@
+import { DEFAULTS } from './makeagif/transcode.js';
+
 function formatBytes(bytes) {
   var marker = 1024; // Change to 1000 if required
   var decimal = 0; // Change as required
@@ -18,4 +20,19 @@ function formatBytes(bytes) {
   else return (bytes / gigaBytes).toFixed(decimal) + ' GB';
 }
 
-export { formatBytes };
+function formatTime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.round(seconds % 60);
+  return [h, m > 9 ? m : h ? '0' + m : m || '0', s > 9 ? s : '0' + s]
+    .filter(Boolean)
+    .join(':');
+}
+
+// https://stackoverflow.com/questions/29487996/how-to-calculate-size-of-a-gif-image
+function estimateGifSize(width, height, length) {
+  // (x * y * fps * length) / 8
+  return (width * height * DEFAULTS.fps * length) / 2;
+}
+
+export { formatBytes, formatTime, estimateGifSize };

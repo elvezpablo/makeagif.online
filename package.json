@@ -3,12 +3,13 @@
     "start": "snowpack dev",
     "build": "snowpack build",
     "deploy": "vercel",
+    "update:core": "cp node_modules/@ffmpeg/core/dist/* public/core",
     "test": "web-test-runner \"src/**/*.test.jsx\"",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "prettier --check \"src/**/*.{js,jsx}\""
   },
   "dependencies": {
-    "@ffmpeg/core": "^0.8.3",
+    "@ffmpeg/core": "^0.8.5",
     "@ffmpeg/ffmpeg": "^0.9.4",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
