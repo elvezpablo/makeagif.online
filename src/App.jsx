@@ -32,7 +32,17 @@ const DEFAULTS = {
 
 const Progress = styled.progress`
   width: 100%;
+  background-color: #eee;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25) inset;  
 `;
+
+const Button = styled.button`
+  padding: 6px;
+  
+  
+`;
+
 const Column = styled.div`
   width: 600px;
   display: flex;
@@ -84,6 +94,11 @@ const App = () => {
     setTranscodeProgress(0);
   };
 
+  const DevContainer = styled.div`
+    
+  
+  `;
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
@@ -109,17 +124,16 @@ const App = () => {
           <Output outputSrc={outputSrc} videoName={videoMetadata.name} />
         )}
         {transcodeState === TRANSCODE.PRELOAD && videoMetadata && (
-          <button  onClick={handleTranscode}>
-            Start
-          </button>
+          <Button onClick={handleTranscode}>Start</Button>
         )}
         {transcodeState >= TRANSCODE.LOADING &&
           transcodeState < TRANSCODE.COMPLETE && (
             <Progress value={transcodeProgress} />
           )}
         {transcodeState === TRANSCODE.COMPLETE && (
-          <button onClick={handleReset}>Reset</button>
+          <Button onClick={handleReset}>Reset</Button>
         )}
+        
       </Column>
     </ThemeProvider>
   );

@@ -5,7 +5,7 @@ export default {
     monospace: 'Menlo, monospace',
   },
   fontSizes: [
-    12, 14, 16, 20, 24, 32, 48, 64
+    "12px", "14px", "16px", "20px", "24px", "32px", "48px"
   ],
   fontWeights: {
     body: 400,
@@ -14,6 +14,8 @@ export default {
   },
   colors: {
     text: '#c3c3c3',
+    border: 'rgba(200,200,200, .5)',
+    borderActive: 'rgba(200,200,200, .9)',
     background: '#212843',
     primary: '#2E7870',
     secondary: '#0B3E48',

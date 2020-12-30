@@ -4,15 +4,15 @@ import styled from 'styled-components';
 
 const getColor = (props) => {
     if (props.isDragAccept) {
-        return 'rgba(200,200,200, .9)';
+        return props.theme.colors.borderActive;
     }
     if (props.isDragReject) {
-        return '#ff1744';
+        return props.theme.colors.error;
     }
     if (props.isDragActive) {
-        return '#2196f3';
+        return props.theme.colors.primary;
     }
-    return 'rgba(200,200,200, .5)';
+    return props.theme.colors.border;
 }
 
 const Container = styled.div`
@@ -21,7 +21,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   font-family: ${(props) => props.theme.fonts.heading};
-  font-size: 18px;  
+  font-size: 18px;
   padding: 120px 0;
   border-width: 1px;
   border-radius: 2px;
@@ -32,7 +32,7 @@ const Container = styled.div`
   box-shadow: ${(props) =>
     props.isDragAccept
       ? 'inset 0px 0px 12px rgba(0,0,0,.7)'
-      : 'inset 0px 0px 4px rgba(0,0,0,.3)'};
+      : 'inset 0px 0px 4px rgba(0,0,0,.3), 0px 0px 8px rgba(0,0,0,.8)'};
   outline: none;
 
   transition: box-shadow 0.5s linear, border-color 0.3s linear;

@@ -15,6 +15,7 @@ Fully client side gif encoding using the awesome [WASM FFMPEG](https://github.co
   - [ ] Options (loop, resize, fps)
   - [ ] Informative Errors
     - [ ] https://swizec.com/blog/tooltips-tooltips-are-not-so-easy
+    - [ ] Disable for Safari (unless preview) and on Mobile https://caniuse.com/sharedarraybuffer
   - [ ] Analytics
 - 1.1 
   - [ ] Options

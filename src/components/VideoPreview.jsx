@@ -6,6 +6,7 @@ const Container = styled.div`
   border-width: 1px;
   border-radius: 2px;
   border-color: rgba(200, 200, 200, 0.5);
+  box-shadow: 0px 0px 12px rgba(0,0,0,.6);
   border-style: solid;
   padding: 2px;
   
@@ -14,7 +15,15 @@ const Container = styled.div`
 const PreviewPlayer = styled.video`
     width: 596px;
 `
-
+const getVideoUrl = videoSrc => {
+    if(videoSrc === "string") {
+        
+        return [];
+    } 
+    const key = `${videoSrc.size}-${videoSrc.lastModified}`;
+    const src = URL.createObjectURL(videoSrc);
+    return [key, src];
+}
 
 const VideoPreview = ({ videoSrc, onLoad }) => {
 
@@ -25,9 +34,10 @@ const VideoPreview = ({ videoSrc, onLoad }) => {
             onLoad(width, height, duration);
         }
     }
+    if(typeof videoSrc === "string") {
 
-    const key = `${videoSrc.size}-${videoSrc.lastModified}`;
-    const src = URL.createObjectURL(videoSrc);
+    }
+    const [key, src] = getVideoUrl(videoSrc);
     return (<Container key={key}><PreviewPlayer onLoadedMetadata={handleLoad} ><source src={src} /></PreviewPlayer></Container>);
 }
 
