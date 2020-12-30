@@ -9,13 +9,14 @@ const Container = styled.div`
   box-shadow: 0px 0px 12px rgba(0,0,0,.6);
   border-style: solid;
   padding: 2px;
-  
+  text-align: center;
 `;
 
-const PreviewPlayer = styled.video`
-    width: 596px;
+const PreviewPlayer = styled.video`    
+    max-width: 596px;
 `
 const getVideoUrl = videoSrc => {
+    // TODO: this is for ease of development so I don't have to load videos all the time
     if(videoSrc === "string") {
         
         return [];

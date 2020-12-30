@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 import Dimensions from './Dimensions';
+import Label from "./Label";
+import { formatBytes, formatTime } from '../formatters';
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
@@ -11,15 +13,24 @@ const Container = styled.div`
 `;
 
 const Settings = ({ settings, onChange }) => {
-    console.log(settings);
-    const [value, setValue] = React.useState([0, 100]);
-    const { ratioLocked, width, height, size, duration } = settings;
+    console.log(settings);    
+    const { 
+      duration, 
+      height, 
+      ratioLocked, 
+      size, 
+      type,
+      width, 
+    } = settings;
     return (
       <Container>
         <Dimensions
-          data={{ width, height, ratioLocked, size, duration }}
+          data={{ width, height, ratioLocked }}
           onChange={(d) => console.log(d)}
-        />        
+        />
+        <Label>{`size: ${formatBytes(size)} duration: ${formatTime(
+          duration,
+        )} file type: ${type}`}</Label>
       </Container>
     );
 }

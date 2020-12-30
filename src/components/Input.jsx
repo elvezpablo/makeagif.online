@@ -9,6 +9,7 @@ const Input = styled.input`
   color: ${({ theme }) => theme.colors.text};
   background: transparent;
   outline: none;
+  text-align: center;
   :hover {
     border-bottom: 1px solid ${({ theme }) => theme.colors.borderActive};
   }

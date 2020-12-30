@@ -32,7 +32,7 @@ const Container = styled.div`
   box-shadow: ${(props) =>
     props.isDragAccept
       ? 'inset 0px 0px 12px rgba(0,0,0,.7)'
-      : 'inset 0px 0px 4px rgba(0,0,0,.3), 0px 0px 8px rgba(0,0,0,.8)'};
+      : 'inset 0px 0px 4px rgba(0,0,0,.3), 0px 0px 10px rgba(0,0,0,.6)'};
   outline: none;
 
   transition: box-shadow 0.5s linear, border-color 0.3s linear;
@@ -64,7 +64,6 @@ const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
         // TODO : let the user know why it failed
         console.log(fileRejections.filter(({ errors }) => console.log(errors)));
     }
-    
     
     return (
       <Container {...getRootProps()} {...{isDragAccept, isDragActive, isDragReject}} >

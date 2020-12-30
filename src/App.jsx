@@ -61,6 +61,7 @@ const App = () => {
       ...DEFAULTS,
       size: video.size,
       name: video.name,
+      type: video.type,
       src: video,
     });
   };
@@ -93,11 +94,6 @@ const App = () => {
     setTranscodeState(TRANSCODE.PRELOAD);
     setTranscodeProgress(0);
   };
-
-  const DevContainer = styled.div`
-    
-  
-  `;
 
   return (
     <ThemeProvider theme={theme}>
