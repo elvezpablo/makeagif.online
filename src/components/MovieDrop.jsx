@@ -49,11 +49,11 @@ const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
 
     const {
         fileRejections,
-        isDragActive,
-        isDragAccept,
-        isDragReject,
+        getInputProps,
         getRootProps,
-        getInputProps
+        isDragAccept,
+        isDragActive,
+        isDragReject
     } = useDropzone({
         accept: fileTypes,
         multiple: false,

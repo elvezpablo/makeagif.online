@@ -39,8 +39,20 @@ const Progress = styled.progress`
 
 const Button = styled.button`
   padding: 6px;
-  
-  
+  margin-top: 8px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes[3]};
+  background-color: ${({ theme }) => theme.colors.primary};
+  border: 2px;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #bbb #aaa #999;
+`;
+
+const PreviewContainer = styled.div`
+  position: relative;
 `;
 
 const Column = styled.div`
@@ -101,13 +113,13 @@ const App = () => {
       <Column>
         <Header />
         {videoMetadata ? (
-          <>
+          <PreviewContainer>
             <VideoPreview videoSrc={videoMetadata.src} onLoad={handleOnLoad} />
             <Settings
               onChange={handleSettingsChange}
               settings={videoMetadata}
             />
-          </>
+          </PreviewContainer>
         ) : (
           <MovieDrop
             onFileDrop={handleFileDrop}
@@ -129,7 +141,6 @@ const App = () => {
         {transcodeState === TRANSCODE.COMPLETE && (
           <Button onClick={handleReset}>Reset</Button>
         )}
-        
       </Column>
     </ThemeProvider>
   );

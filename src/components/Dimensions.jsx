@@ -10,7 +10,7 @@ const Link = styled.div`
   margin: 0 6px;
 `;
 
-const Dimensions = ({ data, onChange }) => {
+const Dimensions = ({ readOnlu, data, onChange }) => {
   const inputChange = (attr) => {
     const obj = {};
     return (e) => {
@@ -23,10 +23,18 @@ const Dimensions = ({ data, onChange }) => {
   return (
     <>
       <Label>{`w: `}</Label>
-      <Input readOnly value={data.width} onChange={inputChange('width')} />
+      <Input
+        readOnly={readOnlu}
+        value={data.width}
+        onChange={inputChange('width')}
+      />
       <Link>{data.ratioLocked ? <Linked /> : <UnLinked />}</Link>
       <Label>{`h: `}</Label>
-      <Input readOnly value={data.height} onChange={inputChange('height')} />
+      <Input
+        readOnly={readOnlu}
+        value={data.height}
+        onChange={inputChange('height')}
+      />
     </>
   );
 };

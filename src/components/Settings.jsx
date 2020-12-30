@@ -6,14 +6,22 @@ import { formatBytes, formatTime } from '../formatters';
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  border: 1px solid rgba(22,22,22,.2);
+  border-radius: 2px 0 0 2px;
+  border-top: 1px solid rgba(120, 120, 120, 0.3);
+  border-bottom: 1px solid rgba(120, 120, 120, 0.4);
+  border-left: 1px solid rgba(120, 120, 120, 0.3);
   margin: 0 0 8px 0;
   padding: 8px 8px 8px 8px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  left: -217px;
+  bottom:  18px;
+  width: 200px;
+  height: 200px;
 `;
 
 const Settings = ({ settings, onChange }) => {
-    console.log(settings);    
+    
     const { 
       duration, 
       height, 
@@ -25,12 +33,13 @@ const Settings = ({ settings, onChange }) => {
     return (
       <Container>
         <Dimensions
+          readOnly={true}
           data={{ width, height, ratioLocked }}
           onChange={(d) => console.log(d)}
         />
-        <Label>{`size: ${formatBytes(size)} duration: ${formatTime(
-          duration,
-        )} file type: ${type}`}</Label>
+        <Label>{`size: ${formatBytes(size)}`}</Label>
+        <Label>{`duration: ${formatTime(duration)}`}</Label>
+        <Label>{`file type: ${type}`}</Label>
       </Container>
     );
 }
