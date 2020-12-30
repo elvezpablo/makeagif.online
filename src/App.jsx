@@ -108,8 +108,8 @@ const App = () => {
         {transcodeState >= TRANSCODE.LOADING && (
           <Output outputSrc={outputSrc} videoName={videoMetadata.name} />
         )}
-        {transcodeState === TRANSCODE.PRELOAD && (
-          <button disabled={!videoMetadata} onClick={handleTranscode}>
+        {transcodeState === TRANSCODE.PRELOAD && videoMetadata && (
+          <button  onClick={handleTranscode}>
             Start
           </button>
         )}

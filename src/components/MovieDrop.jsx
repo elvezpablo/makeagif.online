@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const getColor = (props) => {
     if (props.isDragAccept) {
-        return '#00e676';
+        return 'rgba(200,200,200, .9)';
     }
     if (props.isDragReject) {
         return '#ff1744';
@@ -12,7 +12,7 @@ const getColor = (props) => {
     if (props.isDragActive) {
         return '#2196f3';
     }
-    return '#eeeeee';
+    return 'rgba(200,200,200, .5)';
 }
 
 const Container = styled.div`
@@ -20,15 +20,22 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  border-width: 2px;
+  font-family: ${(props) => props.theme.fonts.heading};
+  font-size: 18px;  
+  padding: 120px 0;
+  border-width: 1px;
   border-radius: 2px;
-  border-color: ${props => getColor(props)};
-  border-style: dashed;
-  background-color: #fafafa;
-  color: #bdbdbd;
+  border-color: ${(props) => getColor(props)};
+  background-color: rgba(0, 0, 0, 0.3);
+  border-style: solid;
+  color: ${(props) => props.theme.colors.text};
+  box-shadow: ${(props) =>
+    props.isDragAccept
+      ? 'inset 0px 0px 12px rgba(0,0,0,.7)'
+      : 'inset 0px 0px 4px rgba(0,0,0,.3)'};
   outline: none;
-  transition: border .24s ease-in-out;
+
+  transition: box-shadow 0.5s linear, border-color 0.3s linear;
 `;
 
 
@@ -43,6 +50,8 @@ const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
     const {
         fileRejections,
         isDragActive,
+        isDragAccept,
+        isDragReject,
         getRootProps,
         getInputProps
     } = useDropzone({
@@ -52,23 +61,21 @@ const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
         onDrop,
     });
     if (fileRejections.length) {
-        // TODO make a cool rejection UI
-        // TODO: warn users of 2 GB file limit
-        
-        // console.log(fileRejections.filter(({errors})) => errors)
+        // TODO : let the user know why it failed
+        console.log(fileRejections.filter(({ errors }) => console.log(errors)));
     }
-
+    
+    
     return (
-        <Container {...getRootProps()}>
-            <input {...getInputProps()} />
-            {
-                isDragActive ?
-                    <p>Drop the files here ...</p> :
-                    <p>Drag 'n' drop some files here, or click to select a video file.</p>
-            }
-
-        </Container>
-    )
+      <Container {...getRootProps()} {...{isDragAccept, isDragActive, isDragReject}} >
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Let go we gotcha...</p>
+        ) : (
+          <p>Drag 'n' drop a video file here, or click to select a video file.</p>
+        )}
+      </Container>
+    );
 }
 
 export default MovieDrop

@@ -36,7 +36,7 @@ Fluent FFMPEG
 https://github.com/fluent-ffmpeg/node-fluent-ffmpeg
 */
 
-const generateFilter = (fps = DEFAULTS.fps, width = DEFAULTS.width) => {
+const gifFilter = (fps = DEFAULTS.fps, width = DEFAULTS.width) => {
   return `[0:v] fps=${fps},scale=w=${width}:h=-1,split [a][b];[a] palettegen [p];[b][p] paletteuse`;
 };
 
@@ -53,7 +53,7 @@ const doTranscode = async (
 ) => {
   ffmpeg.setProgress(({ ratio }) => setProgress({state: TRANSCODE.PROGRESS, data: ratio}));
 
-  const filter = generateFilter();
+  const filter = gifFilter();
 
   setProgress({ state: TRANSCODE.LOADING });
   if(!ffmpeg.isLoaded()) {
@@ -61,11 +61,9 @@ const doTranscode = async (
   }
   
   setProgress({ state: TRANSCODE.STARTED });
-  try {
-    console.log('hey');
+  try {  
     ffmpeg.FS('writeFile', name, await fetchFile(src));
-    setProgress({ state: TRANSCODE.TRANSCODING });
-    // await ffmpeg.run('-i', inputName, '-filter_complex', filter, '-loop', '-1', 'output.gif');
+    setProgress({ state: TRANSCODE.TRANSCODING });    
     await ffmpeg.run('-i', name, '-filter_complex', filter, DEFAULTS.tmpOutput);
     const data = ffmpeg.FS('readFile', DEFAULTS.tmpOutput);
 
