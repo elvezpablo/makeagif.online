@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import ReactSlider from 'react-slider';
 
@@ -11,7 +11,7 @@ const StyledTrack = styled.div`
   top: 0;
   bottom: 0;
   background: ${(props) =>
-    props.index === 2 ? '#f00' : props.index === 1 ? '#0f0' : '#ddd'};
+    props.index === 2 ? '#f00' : props.index === 1 ? '#fff' : '#000'};
   border-radius: 900px;
 `;
 
@@ -33,6 +33,7 @@ const Thumb = (props, state) => (
 );
 
 const ClippingSlider = () => {
+    const [value, setValue] = useState([25, 50]);
     return (
       <StyledSlider
         value={value}
@@ -43,6 +44,8 @@ const ClippingSlider = () => {
         }}
         onAfterChange={(val) => console.log('onAfterChange value:', val)}
         renderTrack={Track}
+        pearling
+        minDistance={10}
         renderThumb={Thumb}
       />
     );

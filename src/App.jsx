@@ -5,14 +5,16 @@ import VideoPreview from './components/VideoPreview';
 import Output from './components/Output';
 import Settings from './components/Settings';
 import Header from './components/Header';
+import Progress from './components/Progress';
+// import ClippingSlider from './components/ClippingSlider';
 import { TRANSCODE, doTranscode } from './makeagif/transcode';
 import theme from './theme';
 
 // Max size in chrome with this library
 // https://github.com/ffmpegwasm/ffmpeg.wasm/issues/92
 // bumped it to 2 GB
-// dropping it back down to 6 MB 
-const _6MB = Math.pow(10, 6) * 20
+// dropping it back down to 6 MB
+const _6MB = Math.pow(10, 6) * 20;
 const MAX_FILE_SIZE = _6MB;
 
 const GlobalStyle = createGlobalStyle`
@@ -21,21 +23,14 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
-    background: ${props => props.theme.colors.background};
+    background: ${(props) => props.theme.colors.background};
   }
 `;
 
 const DEFAULTS = {
   maxSize: MAX_FILE_SIZE,
-  fileTypes: 'video/mp4',
+  fileTypes: ['video/mp4', 'video/avi', 'video/webm'],
 };
-
-const Progress = styled.progress`
-  width: 100%;
-  background-color: #eee;
-  border-radius: 5px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25) inset;  
-`;
 
 const Button = styled.button`
   padding: 6px;
@@ -84,8 +79,10 @@ const App = () => {
 
   const handleProgress = ({ state, data }) => {
     const { PROGRESS, COMPLETE } = TRANSCODE;
+    
     setTranscodeState(state);
     if (state === PROGRESS) {
+      console.log('app: ', state, 'data: ', data);
       setTranscodeProgress(data);
     }
     if (state === COMPLETE) {
@@ -131,16 +128,18 @@ const App = () => {
         {transcodeState >= TRANSCODE.LOADING && (
           <Output outputSrc={outputSrc} videoName={videoMetadata.name} />
         )}
-        {transcodeState === TRANSCODE.PRELOAD && videoMetadata && (
-          <Button onClick={handleTranscode}>Start</Button>
-        )}
+
         {transcodeState >= TRANSCODE.LOADING &&
           transcodeState < TRANSCODE.COMPLETE && (
             <Progress value={transcodeProgress} />
           )}
+        {transcodeState === TRANSCODE.PRELOAD && videoMetadata && (
+          <Button onClick={handleTranscode}>Start</Button>
+        )}
         {transcodeState === TRANSCODE.COMPLETE && (
           <Button onClick={handleReset}>Reset</Button>
         )}
+        {/* <Progress value={.9} /> */}
       </Column>
     </ThemeProvider>
   );

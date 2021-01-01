@@ -25,14 +25,14 @@ const Dimensions = ({ readOnlu, data, onChange }) => {
       <Label>{`w: `}</Label>
       <Input
         readOnly={readOnlu}
-        value={data.width}
+        // value={data.width}
         onChange={inputChange('width')}
       />
       <Link>{data.ratioLocked ? <Linked /> : <UnLinked />}</Link>
       <Label>{`h: `}</Label>
       <Input
         readOnly={readOnlu}
-        value={data.height}
+        // value={data.height}
         onChange={inputChange('height')}
       />
     </>

@@ -7,16 +7,17 @@ const DEFAULTS = {
   fps: 12,
   ratioLocked: true,
   width: 600,
-  log: true,
+  log: false,
   loop: true,
   tmpOutput: 'output.gif',
 };
 
 const TRANSCODE = {
+  PRELOAD : 0,
   LOADING: 1,
   STARTED: 2,
-  PROGRESS: 3,
-  TRANSCODING: 4,
+  TRANSCODING: 3,
+  PROGRESS: 4,
   COMPLETE: 5,
   ERROR: 100
 };
@@ -51,10 +52,11 @@ const doTranscode = async (
   src,
   setProgress,
 ) => {
+  
   ffmpeg.setProgress(({ ratio }) => setProgress({state: TRANSCODE.PROGRESS, data: ratio}));
 
   const filter = gifFilter();
-
+  console.log("loading: ");
   setProgress({ state: TRANSCODE.LOADING });
   if(!ffmpeg.isLoaded()) {
     await ffmpeg.load();
@@ -67,11 +69,9 @@ const doTranscode = async (
     await ffmpeg.run('-i', name, '-filter_complex', filter, DEFAULTS.tmpOutput);
     const data = ffmpeg.FS('readFile', DEFAULTS.tmpOutput);
 
-    const output = URL.createObjectURL(
-      new Blob([data.buffer], { type: 'video/mp4' }),
-    );
-
-    setProgress({ state: TRANSCODE.COMPLETE, data: output });
+    const blob = new Blob([data.buffer], { type: 'image/gif' });
+    
+    setProgress({ state: TRANSCODE.COMPLETE, data: blob });
   } catch (err) {
     console.log("error: ", err);
     setProgress({ state: TRANSCODE.ERROR, data: err });
