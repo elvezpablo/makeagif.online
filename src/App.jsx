@@ -7,6 +7,7 @@ import Settings from './components/Settings';
 import Header from './components/Header';
 import Progress from './components/Progress';
 // import ClippingSlider from './components/ClippingSlider';
+import Messaging from './components/Messaging';
 import { TRANSCODE, doTranscode } from './makeagif/transcode';
 import theme from './theme';
 
@@ -124,15 +125,17 @@ const App = () => {
             fileTypes={DEFAULTS.fileTypes}
           />
         )}
+        <Messaging isError={false} title="Welcome!" message="hello">
+          {transcodeState >= TRANSCODE.LOADING &&
+            transcodeState < TRANSCODE.COMPLETE && (
+              <Progress value={transcodeProgress} />
+            )}
+        </Messaging>
 
         {transcodeState >= TRANSCODE.LOADING && (
           <Output outputSrc={outputSrc} videoName={videoMetadata.name} />
         )}
 
-        {transcodeState >= TRANSCODE.LOADING &&
-          transcodeState < TRANSCODE.COMPLETE && (
-            <Progress value={transcodeProgress} />
-          )}
         {transcodeState === TRANSCODE.PRELOAD && videoMetadata && (
           <Button onClick={handleTranscode}>Start</Button>
         )}

@@ -38,6 +38,12 @@ const Container = styled.div`
   transition: box-shadow 0.5s linear, border-color 0.3s linear;
 `;
 
+const Message = styled.div`
+  margin-top: 8px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes[3]};
+`;
 
 const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
     const onDrop = useCallback(acceptedFiles => {
@@ -66,12 +72,20 @@ const MovieDrop = ({ onFileDrop, fileTypes, maxSize }) => {
     }
     
     return (
-      <Container {...getRootProps()} {...{isDragAccept, isDragActive, isDragReject}} >
+      <Container
+        {...getRootProps()}
+        {...{ isDragAccept, isDragActive, isDragReject }}
+      >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p>Let go we gotcha...</p>
+          <Message>Let go we gotcha...</Message>
         ) : (
-          <p>Drag 'n' drop a video file here, or click to select a video file.</p>
+          <>
+            <Message>
+              Drag 'n' drop a video file here, or click to select a video file.
+            </Message>
+            
+          </>
         )}
       </Container>
     );
